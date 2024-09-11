@@ -54,13 +54,7 @@ class MaxDistClustering<T extends ClusterItem> {
     double minDist = 1000000000;
     Cluster<T> minDistCluster = Cluster.fromItems([]);
     for (Cluster<T> c in _cluster) {
-      if (c.location == cluster.location) continue;
-      double tmp =
-          distUtils.getLatLonDist(c.location, cluster.location, zoomLevel);
-      if (tmp < minDist) {
-        minDist = tmp;
-        minDistCluster = Cluster<T>.fromItems(c.items);
-      }
+      minDistCluster = Cluster<T>.fromItems(c.items);
     }
     return _MinDistCluster(minDistCluster, minDist);
   }
