@@ -80,7 +80,7 @@ class MaxDistClustering<T extends ClusterItem> {
         mergedClusters[key] = cluster;
       }
     }
-
+    print('THIS IS PRINT MESSAGE FROM MERGE IDENTICAL COORDINATES!');
     return mergedClusters.values.toList();
   }
 }
