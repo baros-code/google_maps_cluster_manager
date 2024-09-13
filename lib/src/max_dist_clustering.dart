@@ -33,6 +33,10 @@ class MaxDistClustering<T extends ClusterItem> {
       distMatrix.add([]);
       _cluster.add(Cluster.fromItems([entry1]));
     }
+
+    // Handle identical coordinates
+    _cluster = _mergeIdenticalCoordinates(_cluster);
+
     bool changed = true;
     while (changed) {
       changed = false;
@@ -62,5 +66,21 @@ class MaxDistClustering<T extends ClusterItem> {
       }
     }
     return _MinDistCluster(minDistCluster, minDist);
+  }
+
+  List<Cluster<T>> _mergeIdenticalCoordinates(List<Cluster<T>> clusters) {
+    Map<String, Cluster<T>> mergedClusters = {};
+
+    for (Cluster<T> cluster in clusters) {
+      String key = '${cluster.location.latitude},${cluster.location.longitude}';
+      if (mergedClusters.containsKey(key)) {
+        mergedClusters[key] =
+            Cluster.fromClusters(mergedClusters[key]!, cluster);
+      } else {
+        mergedClusters[key] = cluster;
+      }
+    }
+
+    return mergedClusters.values.toList();
   }
 }
